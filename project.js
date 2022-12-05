@@ -25,26 +25,62 @@ const gameBoard = (()=>{
         return board;
     }
     
-    const roundNumber = ()=>{
-        return count++;
-    };
     const play = () =>{
+        
         for(let cell of allCell){
             cell.addEventListener('click',function(e){
-                    if(roundNumber()%2 == 0){
+                    if(count%2 == 0){
                         cell.innerHTML = `${player().player1.mark}`;
+                        getBoard();
+                        checkWinner(player().player1.name);
+                        count++
                     }else{
                         cell.innerHTML = `${player().player2.mark}`;
+                        getBoard();
+                        checkWinner(player().player2.name);
+                        count++
                     }
-                    getBoard();
             },{once:true})
+        }displayTurn();
+    }
+    const checkWinner = (name)=>{
+            if(
+                (((board[0] == board[1] & board[0] == board[2])&&(board[0] != "")))||
+                (((board[3] == board[4] & board[3] == board[5])&&(board[3] != "")))||
+                (((board[6] == board[7] & board[6] == board[8])&&(board[6] != "")))
+            ){
+                console.log("win 3 in a row")
+                console.log(name)
+            }else if(
+                (((board[0] == board[3] & board[0] == board[6])&&(board[0] != "")))||
+                (((board[1] == board[4] & board[1] == board[7])&&(board[1] != "")))||
+                (((board[2] == board[5] & board[2] == board[8])&&(board[2] != "")))
+            ){
+                console.log("win 3 in a column")
+                console.log(name)
+            }else if(
+                (((board[2] == board[4]& board[2] == board[6] )&&(board[2] != "")))||
+                (((board[0] == board[4]& board[0] == board[8] )&&(board[0] != "")))
+            ){
+                console.log("win 3 in a diagonal")
+                console.log(name)
+            }else if(count == 8 ){
+                console.log("Tie")
+            }
+    }
+    const displayTurn = ()=>{
+        const turn = document.querySelector(".turn");
+        if(count%2 == 0){
+            turn.textContent =`${player().player1.name} Turn`  
+        }else{
+            turn.textContent =`${player().player2.name} Turn`
         }
     }
     const allCell = document.querySelectorAll('.cell');
-    const start =document.querySelector('#start')
+    const start = document.querySelector('#start')
     start.addEventListener('click',function(){
         player();
         play();
     });
-    return{getBoard,roundNumber};
+    return{getBoard};
 })();
