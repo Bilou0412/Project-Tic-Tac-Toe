@@ -41,7 +41,8 @@ body{
     background-color:#fff2f2;
     width: max(300px,25vw);
     height: max(300px,25vw);
-    border: solid;
+    border: solid;<label for="name">name</label>
+    <input type="text" id="name" name="name">
     border-width: 1px;
 }
 .board .cell{
@@ -72,4 +73,10 @@ body{
     width: 60px;
     justify-content: center;
     align-items: center;
+}
+.selectOption form fieldset{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
 }

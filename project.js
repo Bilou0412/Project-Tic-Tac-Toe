@@ -1,32 +1,50 @@
-const allCell = document.querySelectorAll('.cell');
-getPlayer = (player,mark)=>{
-        return {player,mark};
+
+
+const player = () =>{
+    const hiddenInput =(()=>{
+        const selectOption = document.querySelector('.selectOption')
+        selectOption.style.cssText = 'visibility: hidden;';
+    })();
+    const createPlayer = (name,mark) =>{
+        return{name,mark};
+    }
+    const name1 = document.getElementById("name1").value
+    const name2 = document.getElementById("name2").value;
+    const player1 = createPlayer(name1,"x");
+    const player2 = createPlayer(name2,"o");
+
+return {player1,player2};
 };
-const player1 = getPlayer("player1","x");
-const player2 = getPlayer("player2","o");
 
 const gameBoard = (()=>{
     let board = [];
     let count = 0;
     const getBoard = () =>{
-        board = []
+        board = [];
         allCell.forEach((cell)=>{board.push(cell.textContent);})
         return board;
     }
     
-    const roundNumber=()=>{
+    const roundNumber = ()=>{
         return count++;
     };
-    for(let cell of allCell){
-        cell.addEventListener('click',function(e){
-            if(roundNumber()%2 == 0){
-                cell.innerHTML = `${player1.mark}`
-            }else{
-                cell.innerHTML = `${player2.mark}`
-            }
-            getBoard();
-        },{once:true})
+    const play = () =>{
+        for(let cell of allCell){
+            cell.addEventListener('click',function(e){
+                    if(roundNumber()%2 == 0){
+                        cell.innerHTML = `${player().player1.mark}`;
+                    }else{
+                        cell.innerHTML = `${player().player2.mark}`;
+                    }
+                    getBoard();
+            },{once:true})
+        }
     }
-    return{getBoard,roundNumber}
+    const allCell = document.querySelectorAll('.cell');
+    const start =document.querySelector('#start')
+    start.addEventListener('click',function(){
+        player();
+        play();
+    });
+    return{getBoard,roundNumber};
 })();
-

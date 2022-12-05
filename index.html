@@ -13,6 +13,18 @@
         <div class="title"><h1>tic tac toe</h1></div>
     </div>
     <div class="body">
+        <div class="selectOption">
+            <form >
+                <fieldset>
+                    <div class="player1">
+                        <input type="text" id="name1" name="name" placeholder="player1" required>
+                    </div>
+                    <div class="player2">
+                        <input type="text" id="name2" name="name" placeholder="player2" required>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
         <div class="board">
             <div class="cell" id="0"></div>
             <div class="cell" id="1"></div>
@@ -25,8 +37,8 @@
             <div class="cell" id="8"></div>
         </div>
         <div class="controlPanel">
-            <div class="start">Start</div>
-            <div class="reset">Reset</div>
+            <div class="start" id="start">Start</div>
+            <div class="reset" id="reset">Reset</div>
         </div>
     </div>
     <div class="footer"></div>
