@@ -1,86 +1,140 @@
+(game = ()=>{
+    let board;
+    let roundNumber = 0;
+    let player1;
+    let player2;
+    let finish = 0;
 
-
-const player = () =>{
-    const hiddenInput =(()=>{
-        const selectOption = document.querySelector('.selectOption')
-        selectOption.style.cssText = 'visibility: hidden;';
+    const domElement = (()=>{
+        const userInstuction = document.querySelector(".alert");
+        const turn = document.querySelector(".turn");
+        const allCell = document.querySelectorAll('.cell');
+        const startBtn = document.querySelector('#start');
+        const name1 = document.getElementById("name1");
+        const name2 = document.getElementById("name2");
+        const selectOption = document.querySelector('.selectOption');
+        return{
+            userInstuction,
+            allCell,
+            startBtn,
+            name1,
+            name2,
+            selectOption,
+            turn
+        }
     })();
-    const createPlayer = (name,mark) =>{
-        return{name,mark};
-    }
-    const name1 = document.getElementById("name1").value
-    const name2 = document.getElementById("name2").value;
-    const player1 = createPlayer(name1,"x");
-    const player2 = createPlayer(name2,"o");
-
-return {player1,player2};
-};
-
-const gameBoard = (()=>{
-    let board = [];
-    let count = 0;
-    const getBoard = () =>{
-        board = [];
-        allCell.forEach((cell)=>{board.push(cell.textContent);})
-        return board;
-    }
     
+    (start = () =>{
+        domElement.startBtn.addEventListener('click',()=>{
+            if(formVerify()== true && finish == 0){
+                player1 = player(domElement.name1.value,"X");
+                player2 = player(domElement.name2.value,"O");
+                play();
+            }else{
+                domElement.selectOption.style.cssText = 'visibility: visible;';
+                domElement.startBtn.textContent='Start';
+                domElement.turn.textContent =""
+                resetBoard();
+                getBoard();
+                roundNumber = 0;
+                finish = 0;
+            }
+        })
+    })()
+
     const play = () =>{
-        
-        for(let cell of allCell){
+        for(let cell of domElement.allCell){
             cell.addEventListener('click',function(e){
-                    if(count%2 == 0){
-                        cell.innerHTML = `${player().player1.mark}`;
+                if(finish == 0){
+                    if(roundNumber%2 == 0){
+                        cell.innerHTML = `${player1.marker}`;
                         getBoard();
-                        checkWinner(player().player1.name);
-                        count++
-                    }else{
-                        cell.innerHTML = `${player().player2.mark}`;
-                        getBoard();
-                        checkWinner(player().player2.name);
-                        count++
+                        roundNumber++;
+                        displayTurn();
+                        checkWinner(player1.name);
                     }
+                    else{
+                        cell.innerHTML = `${player2.marker}`;
+                        getBoard();
+                        roundNumber++;
+                        displayTurn();
+                        checkWinner(player2.name);
+                    }
+                }
             },{once:true})
         }displayTurn();
     }
-    const checkWinner = (name)=>{
-            if(
-                (((board[0] == board[1] & board[0] == board[2])&&(board[0] != "")))||
-                (((board[3] == board[4] & board[3] == board[5])&&(board[3] != "")))||
-                (((board[6] == board[7] & board[6] == board[8])&&(board[6] != "")))
-            ){
-                console.log("win 3 in a row")
-                console.log(name)
-            }else if(
-                (((board[0] == board[3] & board[0] == board[6])&&(board[0] != "")))||
-                (((board[1] == board[4] & board[1] == board[7])&&(board[1] != "")))||
-                (((board[2] == board[5] & board[2] == board[8])&&(board[2] != "")))
-            ){
-                console.log("win 3 in a column")
-                console.log(name)
-            }else if(
-                (((board[2] == board[4]& board[2] == board[6] )&&(board[2] != "")))||
-                (((board[0] == board[4]& board[0] == board[8] )&&(board[0] != "")))
-            ){
-                console.log("win 3 in a diagonal")
-                console.log(name)
-            }else if(count == 8 ){
-                console.log("Tie")
-            }
-    }
+
     const displayTurn = ()=>{
-        const turn = document.querySelector(".turn");
-        if(count%2 == 0){
-            turn.textContent =`${player().player1.name} Turn`  
+        if(roundNumber%2 == 0){
+            domElement.turn.textContent =`${player1.name} Turn` 
         }else{
-            turn.textContent =`${player().player2.name} Turn`
+            domElement.turn.textContent =`${player2.name} Turn`
         }
     }
-    const allCell = document.querySelectorAll('.cell');
-    const start = document.querySelector('#start')
-    start.addEventListener('click',function(){
-        player();
-        play();
-    });
-    return{getBoard};
-})();
+
+    const checkWinner = (name)=>{
+        if(
+            (((board[0] == board[1] & board[0] == board[2])&&(board[0] != "")))||
+            (((board[3] == board[4] & board[3] == board[5])&&(board[3] != "")))||
+            (((board[6] == board[7] & board[6] == board[8])&&(board[6] != "")))
+        ){
+            domElement.turn.textContent =`${name} WIN`
+            domElement.startBtn.textContent='Restart'
+            finish = 1;
+        }else if(
+            (((board[0] == board[3] & board[0] == board[6])&&(board[0] != "")))||
+            (((board[1] == board[4] & board[1] == board[7])&&(board[1] != "")))||
+            (((board[2] == board[5] & board[2] == board[8])&&(board[2] != "")))
+        ){
+            domElement.turn.textContent =`${name} WIN`
+            domElement.startBtn.textContent='Restart'
+            finish = 1;
+        }else if(
+            (((board[2] == board[4]& board[2] == board[6] )&&(board[2] != "")))||
+            (((board[0] == board[4]& board[0] == board[8] )&&(board[0] != "")))
+        ){
+            domElement.turn.textContent =`${name} WIN`
+            domElement.startBtn.textContent='Restart'
+            finish = 1;
+        }else if(roundNumber == 9 ){
+            domElement.turn.textContent =`TIE`
+            domElement.startBtn.textContent='Restart'
+            finish = 1;
+        }
+}
+
+    const formVerify =(()=>{
+        if(domElement.name1.value != "" && domElement.name2.value != ""){
+            domElement.selectOption.style.cssText = 'visibility: hidden;';
+            domElement.userInstuction.style.cssText = 'visibility: hidden;';
+            return true;
+        }
+        else{
+            domElement.userInstuction.style.cssText = 'visibility: visible;';
+            return false;
+        }
+    })
+    
+    
+    const player = (name,marker) =>{
+        return{
+            name,
+            marker,
+        };
+    }   
+    
+    const getBoard = (()=>{
+        board = [];
+        domElement.allCell.forEach((cell)=>{board.push(cell.textContent);});
+    })
+    const resetBoard = (()=>{
+        board = [];
+        domElement.allCell.forEach((cell)=>{cell.textContent=""});
+    })
+
+})()
+
+
+
+
