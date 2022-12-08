@@ -13,6 +13,9 @@
         const name1 = document.getElementById("name1");
         const name2 = document.getElementById("name2");
         const selectOption = document.querySelector('.selectOption');
+        const finish = document.querySelector('.finish')
+        const gameover = document.querySelector('.gameover')
+        const restartBtn = document.querySelector('#restart')
         return{
             userInstuction,
             allCell,
@@ -20,24 +23,28 @@
             name1,
             name2,
             selectOption,
-            turn
+            turn,
+            finish,
+            gameover,
+            restartBtn
         }
     })();
     
     (start = () =>{
+        domElement.restartBtn.addEventListener(('click'),()=>{
+            domElement.gameover.style.cssText = 'visibility: hidden;';
+            domElement.selectOption.style.cssText = 'visibility: visible;';
+            domElement.turn.textContent =""
+            resetBoard();
+            getBoard();
+            roundNumber = 0;
+            finish = 0;
+        })
         domElement.startBtn.addEventListener('click',()=>{
             if(formVerify()== true && finish == 0){
                 player1 = player(domElement.name1.value,"X");
                 player2 = player(domElement.name2.value,"O");
                 play();
-            }else{
-                domElement.selectOption.style.cssText = 'visibility: visible;';
-                domElement.startBtn.textContent='Start';
-                domElement.turn.textContent =""
-                resetBoard();
-                getBoard();
-                roundNumber = 0;
-                finish = 0;
             }
         })
     })()
@@ -79,27 +86,27 @@
             (((board[3] == board[4] & board[3] == board[5])&&(board[3] != "")))||
             (((board[6] == board[7] & board[6] == board[8])&&(board[6] != "")))
         ){
-            domElement.turn.textContent =`${name} WIN`
-            domElement.startBtn.textContent='Restart'
+            domElement.finish.textContent =`${name} WIN`
+            domElement.gameover.style.cssText = 'visibility: visible;';
             finish = 1;
         }else if(
             (((board[0] == board[3] & board[0] == board[6])&&(board[0] != "")))||
             (((board[1] == board[4] & board[1] == board[7])&&(board[1] != "")))||
             (((board[2] == board[5] & board[2] == board[8])&&(board[2] != "")))
         ){
-            domElement.turn.textContent =`${name} WIN`
-            domElement.startBtn.textContent='Restart'
+            domElement.finish.textContent =`${name} WIN`
+            domElement.gameover.style.cssText = 'visibility: visible;';
             finish = 1;
         }else if(
             (((board[2] == board[4]& board[2] == board[6] )&&(board[2] != "")))||
             (((board[0] == board[4]& board[0] == board[8] )&&(board[0] != "")))
         ){
-            domElement.turn.textContent =`${name} WIN`
-            domElement.startBtn.textContent='Restart'
+            domElement.finish.textContent =`${name} WIN`
+            domElement.gameover.style.cssText = 'visibility: visible;';
             finish = 1;
         }else if(roundNumber == 9 ){
-            domElement.turn.textContent =`TIE`
-            domElement.startBtn.textContent='Restart'
+            domElement.finish.textContent =`TIE`
+            domElement.gameover.style.cssText = 'visibility: visible;';
             finish = 1;
         }
 }
@@ -134,6 +141,7 @@
     })
 
 })()
+
 
 
 

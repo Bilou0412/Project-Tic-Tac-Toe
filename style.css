@@ -25,6 +25,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 200px;
 }
 .footer{
     display: flex;
@@ -45,7 +46,8 @@ body{
     justify-content: center;
     align-items: center;
     font-size: xx-large;
-    
+    font-size: 4rem;
+    font-family: XO;
 }
 .one{
     border: 7px solid rgb(1, 9, 82);
@@ -97,9 +99,24 @@ body{
 }
 
 body .turn{
+    display: flex;
     font-size: xx-large;
     padding: 10px;
     margin-top: 20px;
+    font-family: Sunny;
+    background-color: #3b82f6;
+    border:1px solid #1d4ed8;
+    border-radius: 40px;
+    height: 80px;
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3rem;
+    border-bottom:10px solid #1d4ed8;
+    text-shadow: 0px 3px #1d4ed8;
+    transition: all .1s;
+    
 }
 .selectOption{
     position: absolute;
@@ -114,6 +131,7 @@ body .turn{
 button{
     height: 100px;
     width:180px;
+    float: left;
     background-color: #3b82f6;
     border:1px solid #1d4ed8;
     border-radius: 40px;
@@ -128,8 +146,10 @@ button{
 }
 button:active{
     border:1px solid #1d4ed8;
-    transform: translate(0,10%);
-    text-shadow: 0px 0px #1d4ed8;
+    transform: translate(0,10px);
+    -webkit-transform: translate(0px,10px);
+    
+    height: 90px;
 }
 
 form{
@@ -149,9 +169,11 @@ input{
     width: 250px;
     font-size: 3rem;
     border-radius: 40px;
-    border:5px solid #1d4ed8;
+    border:none;
     outline: #1d4ed8;
     background-color: #93c5fd;
+    display: flex;
+    padding: 10px;
 }
 .versus{
     color: white;
@@ -169,4 +191,48 @@ input{
     border-radius: 5px;
     padding: 3px;
     visibility: hidden;
+}
+h1{
+    justify-self: center;
+    align-self: center;
+    font-family: Sunny;
+    font-size: 5rem;
+    font-weight: 100;
+    margin: 0;
+}
+@font-face {
+    font-family: XO;
+    src: url(./TicTacToe.ttf);
+ }
+ @font-face {
+    font-family: Sunny;
+    src: url(./Sunny\ Spells.ttf);
+}
+.gameover{
+    display: grid;
+    grid-template-rows: repeat(6,1fr);
+    position: absolute;
+    backdrop-filter: blur(10px);
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
+}
+
+
+.gameover #start:active{
+    border:1px solid #1d4ed8;
+    transform: translate(0,10px);
+    -webkit-transform: translate(0px,10px);
+    height: 90px;
+}
+
+.gameover .finish{
+   display: flex;
+   font-size: 4rem;
+   justify-content: center;
+   align-items: center;
+   font-family: Sunny;
+    width: 100%;
+    background-color: #1d4ed8;
+    grid-row: 3/4;
 }
