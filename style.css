@@ -6,12 +6,12 @@ html {line-height: 1.15; /* 1 */-webkit-text-size-adjust: 100%; /* 2 */}body {  
     color: #000000;
 }
 html{
-    height: 100vh;
+    height: 100%;
 }
 body{
     display: grid;
     grid-template-rows: 1fr 10fr 1fr;
-    height: 100vh;
+    height: 100%;
     background: rgb(0,19,36);
     background: radial-gradient(circle, rgba(0,19,36,1) 0%, rgba(9,39,101,1) 18%, rgba(0,212,255,1) 180%);
 }
