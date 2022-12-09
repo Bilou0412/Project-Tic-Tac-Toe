@@ -202,13 +202,13 @@ h1{
 }
 @font-face {
     font-family: XO;
-    src: url(./TicTacToe.ttf);
+    src: url(./font/TicTacToe.ttf);
  }
  @font-face {
     font-family: Sunny;
-    src: url(./Sunny\ Spells.ttf);
+    src: url(./font/TicTacToe.ttf);
 }
-.gameover{
+.gameOver{
     display: grid;
     grid-template-rows: repeat(6,1fr);
     position: absolute;
@@ -219,14 +219,14 @@ h1{
 }
 
 
-.gameover #start:active{
+.gameOver #start:active{
     border:1px solid #1d4ed8;
     transform: translate(0,10px);
     -webkit-transform: translate(0px,10px);
     height: 90px;
 }
 
-.gameover .finish{
+.gameOver .finish{
    display: flex;
    font-size: 4rem;
    justify-content: center;
