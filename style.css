@@ -206,7 +206,7 @@ h1{
  }
  @font-face {
     font-family: Sunny;
-    src: url(./font/TicTacToe.ttf);
+    src: url(./font/Sunny\ Spells.ttf);
 }
 .gameOver{
     display: grid;
