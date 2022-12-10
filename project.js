@@ -5,7 +5,7 @@ function player(name, mark) {
   };
 }
 
-const game = (() => {
+const game = (() =>{
   let board = [];
   let roundNumber = 0;
 
@@ -20,6 +20,10 @@ const game = (() => {
     const finish = document.querySelector('.finish');
     const gameOver = document.querySelector('.gameOver');
     const restartBtn = document.querySelector('#restart');
+    const iabtn = document.querySelector('.iabtn');
+    const on = document.querySelector('.on');
+    const off = document.querySelector('.off');
+
     return {
       userInstruction,
       allCell,
@@ -31,6 +35,9 @@ const game = (() => {
       finish,
       gameOver,
       restartBtn,
+      iabtn,
+      on,
+      off,
     };
   })();
 
@@ -127,10 +134,30 @@ const game = (() => {
           console.log(cell.textContent);
           currentPlayer = displayTurn();
           cell.innerHTML = `${currentPlayer.mark}`;
+          console.log(cell.index);
           updateBoard();
           controlTheFlow(currentPlayer);
         }
       });
+    });
+  })();
+
+  const listenIaBtn = (() => {
+    let status = true;
+    domElement.name2.setAttribute('disabled', '');
+    domElement.iabtn.addEventListener('click', () => {
+      if (status) {
+        status = false;
+        domElement.off.style.cssText = 'visibility: visible;';
+        domElement.on.style.cssText = 'visibility: hidden;';
+        domElement.name2.removeAttribute('disabled', '');
+      } else {
+        status = true;
+        domElement.on.style.cssText = 'visibility: visible;';
+        domElement.off.style.cssText = 'visibility: hidden;';
+        domElement.name2.setAttribute('disabled', '');
+        domElement.name2.value = '';
+      }
     });
   })();
 
