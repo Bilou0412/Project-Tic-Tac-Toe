@@ -170,9 +170,13 @@ const game = (() =>{
     const secondDiagonal = [binaryBoard[2] * binaryBoard[4] * binaryBoard[6]];
 
     if (roundNumber < 1) {
-      board[board.findIndex(isEmpty)] = 'O';
+      if (binaryBoard[4] === 1) {
+        board[4] = 'O';
+      } else {
+        board[board.findIndex(isEmpty)] = 'O';
+      }
     }
-    if (firstColumn[0] === 25) {
+    if (firstColumn[0] === 64 || firstColumn[0] === 25) {
       if (binaryBoard[0] === 1) {
         board[0] = 'O';
       } else if (binaryBoard[3] === 1) {
@@ -180,7 +184,7 @@ const game = (() =>{
       } else if (binaryBoard[6] === 1) {
         board[6] = 'O';
       }
-    } else if (secondColumn[0] === 25) {
+    } else if (secondColumn[0] === 64 || secondColumn[0] === 25) {
       if (binaryBoard[1] === 1) {
         board[1] = 'O';
       } else if (binaryBoard[4] === 1) {
@@ -188,7 +192,7 @@ const game = (() =>{
       } else if (binaryBoard[7] === 1) {
         board[7] = 'O';
       }
-    } else if (thirdColumn[0] === 25) {
+    } else if (thirdColumn[0] === 64 || thirdColumn[0] === 25) {
       if (binaryBoard[2] === 1) {
         board[2] = 'O';
       } else if (binaryBoard[5] === 1) {
@@ -196,7 +200,7 @@ const game = (() =>{
       } else if (binaryBoard[8] === 1) {
         board[8] = 'O';
       }
-    } else if (firstDiagonal[0] === 25) {
+    } else if (firstDiagonal[0] === 64 || firstDiagonal[0] === 25) {
       if (binaryBoard[0] === 1) {
         board[0] = 'O';
       } else if (binaryBoard[4] === 1) {
@@ -204,7 +208,7 @@ const game = (() =>{
       } else if (binaryBoard[8] === 1) {
         board[8] = 'O';
       }
-    } else if (secondDiagonal[0] === 25) {
+    } else if (secondDiagonal[0] === 64 || secondDiagonal[0] === 25) {
       if (binaryBoard[2] === 1) {
         board[2] = 'O';
       } else if (binaryBoard[4] === 1) {
@@ -212,7 +216,7 @@ const game = (() =>{
       } else if (binaryBoard[6] === 1) {
         board[6] = 'O';
       }
-    } else if (firstRow[0] === 25) {
+    } else if (firstRow[0] === 64 || firstRow[0] === 25) {
       if (binaryBoard[0] === 1) {
         board[0] = 'O';
       } else if (binaryBoard[1] === 1) {
@@ -220,7 +224,7 @@ const game = (() =>{
       } else if (binaryBoard[2] === 1) {
         board[2] = 'O';
       }
-    } else if (secondRow[0] === 25) {
+    } else if (secondRow[0] === 64 || secondRow[0] === 25) {
       if (binaryBoard[3] === 1) {
         board[3] = 'O';
       } else if (binaryBoard[4] === 1) {
@@ -228,7 +232,7 @@ const game = (() =>{
       } else if (binaryBoard[5] === 1) {
         board[5] = 'O';
       }
-    } else if (thirdRow[0] === 25) {
+    } else if (thirdRow[0] === 64 || thirdRow[0] === 25) {
       if (binaryBoard[6] === 1) {
         board[6] = 'O';
       } else if (binaryBoard[7] === 1) {
