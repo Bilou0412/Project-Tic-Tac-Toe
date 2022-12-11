@@ -44,9 +44,14 @@ const game = (() =>{
   const player1 = player('', 'X');
   const player2 = player('', 'O');
 
-  const updatePlayerName = () => {
-    player1.name = domElement.name1.value;
-    player2.name = domElement.name2.value;
+  const updatePlayerName = (status) => {
+    if (status) {
+      player1.name = domElement.name1.value;
+      player2.name = 'ROBOT';
+    } else {
+      player1.name = domElement.name1.value;
+      player2.name = domElement.name2.value;
+    }
   };
 
   const updateBoard = () => {
@@ -60,6 +65,12 @@ const game = (() =>{
     board = [];
     domElement.allCell.forEach((cell) => {
       cell.textContent = '';
+    });
+  };
+
+  const pushBoard = () => {
+    domElement.allCell.forEach((cell) => {
+      cell.textContent = board[cell.id];
     });
   };
 
@@ -97,21 +108,23 @@ const game = (() =>{
     domElement.selectOption.style.cssText = 'visibility: hidden;';
   };
 
-  const displayTurn = () => {
+  const displayTurn = (status) => {
     let currentPlayer;
-    if (roundNumber % 2 === 0) {
+    if (roundNumber % 2 === 0 && status === false) {
       domElement.turn.textContent = `${player1.name} Turn`;
       currentPlayer = player1;
-    } else {
+    } else if (roundNumber % 2 !== 0 && status === false) {
       domElement.turn.textContent = `${player2.name} Turn`;
       currentPlayer = player2;
+    } else {
+      domElement.turn.textContent = `You VS ${player2.name}`;
     }
     return currentPlayer;
   };
 
-  const formVerify = () => {
+  const formVerify = (iaStatus) => {
     let form;
-    if (domElement.name1.value !== '' && domElement.name2.value !== '') {
+    if (domElement.name1.value !== '' && (domElement.name2.value !== '' || iaStatus === true)) {
       domElement.userInstruction.style.cssText = 'visibility: hidden;';
       form = true;
     } else {
@@ -126,21 +139,101 @@ const game = (() =>{
     displayTurn();
   };
 
-  const listenBoardBtn = (() => {
-    let currentPlayer;
-    domElement.allCell.forEach((cell) => {
-      cell.addEventListener('click', () => {
-        if (cell.textContent === '') {
-          console.log(cell.textContent);
-          currentPlayer = displayTurn();
-          cell.innerHTML = `${currentPlayer.mark}`;
-          console.log(cell.index);
-          updateBoard();
-          controlTheFlow(currentPlayer);
-        }
-      });
-    });
-  })();
+  const iaPlay = () => {
+    const binaryBoard = board.filter(() => true);
+    const isEmpty = (element) => element === '';
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < 8; i++) {
+      if (board[i] === 'X') {
+        binaryBoard[i] = 1;
+      } else if (board[i] === 'O') {
+        binaryBoard[i] = 3;
+      }
+    }
+
+    const firstRow = [binaryBoard[0] + binaryBoard[1] + binaryBoard[2]];
+    const secondRow = [binaryBoard[3] + binaryBoard[4] + binaryBoard[5]];
+    const thirdRow = [binaryBoard[6] + binaryBoard[7] + binaryBoard[8]];
+
+    const firstColumn = [binaryBoard[0] + binaryBoard[3] + binaryBoard[6]];
+    const secondColumn = [binaryBoard[1] + binaryBoard[4] + binaryBoard[7]];
+    const thirdColumn = [binaryBoard[2] + binaryBoard[5] + binaryBoard[8]];
+
+    const firstDiagonal = [binaryBoard[0] + binaryBoard[4] + binaryBoard[8]];
+    const secondDiagonal = [binaryBoard[2] + binaryBoard[4] + binaryBoard[6]];
+
+    if (roundNumber < 1) {
+      board[board.findIndex(isEmpty)] = 'O';
+    }
+    if (firstColumn[0] === '2') {
+      if (board[0] === '') {
+        board[0] = 'O';
+      } else if (board[3] === '') {
+        board[3] = 'O';
+      } else if (board[6] === '') {
+        board[6] = 'O';
+      }
+    } else if (secondColumn[0] === '2') {
+      if (board[1] === '') {
+        board[1] = 'O';
+      } else if (board[4] === '') {
+        board[4] = 'O';
+      } else if (board[7] === '') {
+        board[7] = 'O';
+      }
+    } else if (thirdColumn[0] === '2') {
+      if (board[2] === '') {
+        board[2] = 'O';
+      } else if (board[5] === '') {
+        board[5] = 'O';
+      } else if (board[8] === '') {
+        board[8] = 'O';
+      }
+    } else if (firstDiagonal[0] === '2') {
+      if (board[0] === '') {
+        board[0] = 'O';
+      } else if (board[4] === '') {
+        board[4] = 'O';
+      } else if (board[8] === '') {
+        board[8] = 'O';
+      }
+    } else if (secondDiagonal[0] === '2') {
+      if (board[2] === '') {
+        board[2] = 'O';
+      } else if (board[4] === '') {
+        board[4] = 'O';
+      } else if (board[6] === '') {
+        board[6] = 'O';
+      }
+    } else if (firstRow[0] === '2') {
+      if (board[0] === '') {
+        board[0] = 'O';
+      } else if (board[1] === '') {
+        board[1] = 'O';
+      } else if (board[2] === '') {
+        board[2] = 'O';
+      }
+    } else if (secondRow[0] === '2') {
+      if (board[3] === '') {
+        board[3] = 'O';
+      } else if (board[4] === '') {
+        board[4] = 'O';
+      } else if (board[5] === '') {
+        board[5] = 'O';
+      }
+    } else if (thirdRow[0] === '2') {
+      if (board[6] === '') {
+        board[6] = 'O';
+      } else if (board[7] === '') {
+        board[7] = 'O';
+      } else if (board[8] === '') {
+        board[8] = 'O';
+      }
+    } else if (roundNumber > 1) {
+      board[board.findIndex(isEmpty)] = 'O';
+    }
+    pushBoard();
+  };
 
   const listenIaBtn = (() => {
     let status = true;
@@ -159,6 +252,29 @@ const game = (() =>{
         domElement.name2.value = '';
       }
     });
+    const getStatus = () => status;
+    return { getStatus };
+  })();
+
+  const listenBoardBtn = (() => {
+    let currentPlayer;
+    domElement.allCell.forEach((cell) => {
+      cell.addEventListener('click', () => {
+        if (cell.textContent === '' && listenIaBtn.getStatus() === false) {
+          currentPlayer = displayTurn(listenIaBtn.getStatus());
+          cell.innerHTML = `${currentPlayer.mark}`;
+          updateBoard();
+          controlTheFlow(currentPlayer);
+        } else if (cell.textContent === '' && listenIaBtn.getStatus() === true) {
+          cell.innerHTML = `${'X'}`;
+          updateBoard();
+          checkWinner(player1.name);
+          iaPlay();
+          checkWinner(player2.name);
+          roundNumber += 2;
+        }
+      });
+    });
   })();
 
   const listenRestartBtn = (() => {
@@ -167,16 +283,25 @@ const game = (() =>{
       displayForm();
       resetBoard();
       updateBoard();
+      if (listenIaBtn.getStatus()) {
+        domElement.off.style.cssText = 'visibility: hidden;';
+        domElement.on.style.cssText = 'visibility: visible;';
+      } else {
+        domElement.on.style.cssText = 'visibility: hidden;';
+        domElement.off.style.cssText = 'visibility: visible;';
+      }
       roundNumber = 0;
     });
   })();
 
   const listenStartBtn = (() => {
     domElement.startBtn.addEventListener('click', () => {
-      if (formVerify()) {
-        updatePlayerName();
+      if (formVerify(listenIaBtn.getStatus())) {
+        domElement.on.style.cssText = 'visibility: hidden;';
+        domElement.off.style.cssText = 'visibility: hidden;';
+        updatePlayerName(listenIaBtn.getStatus());
         hiddenForm();
-        displayTurn();
+        displayTurn(listenIaBtn.getStatus());
       }
     });
   })();
